@@ -2,7 +2,6 @@ package org.examples;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.apache.spark.SparkConf;
 import org.apache.spark.SparkException;
 import org.apache.spark.api.java.function.MapFunction;
 import org.apache.spark.sql.Dataset;
@@ -24,12 +23,8 @@ final public class SparkNotAcidCompliant {
         Logger.getLogger("org.apache").setLevel(Level.WARN);
 
         // Create Spark Session
-        SparkConf sparkConf = new SparkConf().setAppName(SPARK_APPLICATION_NAME)
-                .setMaster(SPARK_APPLICATION_RUNNING_MODE);
-
-        SparkSession sparkSession = SparkSession
-                .builder()
-                .config(sparkConf)
+        SparkSession sparkSession = SparkSession.builder().appName(SPARK_APPLICATION_NAME)
+                .master(SPARK_APPLICATION_RUNNING_MODE)
                 .getOrCreate();
 
         Dataset<Long> data = sparkSession.range(100, 200);
